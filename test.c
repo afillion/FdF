@@ -1,17 +1,4 @@
-#include <mlx.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <fcntl.h>
-#include <sys/types.h>
-#include <sys/uio.h>
-#include <unistd.h>
-#include "./get_next_line/get_next_line.h"
-
-typedef struct	s_env
-{
-	void		*mlx;
-	void		*win;
-}				t_env;
+#include "fdf.h"
 
 void	ft_draw(void *mlx, void *win)
 {
@@ -37,7 +24,7 @@ int		expose_hook(t_env *e)
 	return (0);
 }
 
-int		key_hook(int keycode, t_env e)
+int		key_hook(int keycode)
 {
 	printf("key = %d\n", keycode);
 	if (keycode == 53)
@@ -45,7 +32,7 @@ int		key_hook(int keycode, t_env e)
 	return (0);
 }
 
-int		mouse_hook(int button, int x, int y, t_env e)
+int		mouse_hook(int button, int x, int y)
 {
 	printf("mouse button = %d(%d,%d)\n", button, x, y);
 	return (0);
@@ -57,7 +44,6 @@ int		main(int ac, char **av)
 	int		fd;
 	char	*line;
 
-	line = NULL;
 	if (ac == 2)
 	{
 		fd = open(av[1], O_RDONLY);
