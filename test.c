@@ -9,11 +9,11 @@ void line(int x0, int y0, int x1, int y1, void *mlx, void *win)
 	int err;
 	int e2;
 
-	dx = abs(x1-x0);
+	dx = ft_abs(x1-x0);
 	sx = x0<x1 ? 1 : -1;
 	dy = abs(y1-y0);
 	sy = y0<y1 ? 1 : -1;
-	err = (dx>dy ? dx : -dy)/2;
+	err = (dx>dy ? dx : -dy) / 2;
 	while (1)
 	{
 		mlx_pixel_put(mlx, win, x0, y0, 0xFF0000);
@@ -37,8 +37,8 @@ void	ft_draw(void *mlx, void *win)
 {
 	int		x;
 	int		y;
-	x = 0;
 
+	x = 0;
 	while (x < 360)
 	{
 		y = 0;
