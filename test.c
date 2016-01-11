@@ -37,14 +37,18 @@ void	ft_draw(void *mlx, void *win)
 {
 	int		x;
 	int		y;
+	int		x1=0;
+	int		y1=0;
 
 	x = 0;
-	while (x < 360)
+	while (x1 < 360)
 	{
+		x1 += (x + 20);
 		y = 0;
-		while (y < 220)
+		while (y1 < 220)
 		{
-			mlx_pixel_put(mlx, win, x, y, 0xFF0000);
+			y1 += (y + 20);
+			line(x, y, x1, y1, mlx, win);
 			y += 20;
 		}
 		x += 20;
