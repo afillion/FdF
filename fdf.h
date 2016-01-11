@@ -12,5 +12,6 @@ typedef struct		s_env
 }					t_env;
 
 void				ft_draw(void *mlx, void *win);
+void				line(int x0, int y0, int x1, int y1, void *mlx, void *win);
 
 #endif
