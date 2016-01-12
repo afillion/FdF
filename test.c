@@ -37,18 +37,14 @@ void	ft_draw(void *mlx, void *win)
 {
 	int		x;
 	int		y;
-	int		x1=0;
-	int		y1=0;
 
 	x = 0;
-	while (x1 < 360)
+	while (x < 360)
 	{
-		x1 += (x + 20);
 		y = 0;
-		while (y1 < 220)
+		while (y < 220)
 		{
-			y1 += (y + 20);
-			line(x, y, x1, y1, mlx, win);
+			mlx_pixel_put(mlx, win, x, y, 0xFF0000);
 			y += 20;
 		}
 		x += 20;
@@ -80,17 +76,26 @@ int		main(int ac, char **av)
 	t_env	e;
 	int		fd;
 	char	*line;
+	char	*map;
 
+	line = NULL;
+	map = ft_strnew(0);
 	if (ac == 2)
 	{
 		fd = open(av[1], O_RDONLY);
-		get_next_line(fd, &line);
+		while (get_next_line(fd, &line) > 0)
+		{
+			map = ft_strjoin(map, ft_strjoin(line, "\n"));
+			free(line);
+		}
 	}
+	ft_putstr(map);
 	e.mlx = mlx_init();
 	e.win = mlx_new_window(e.mlx, 420, 420, "42");
 	mlx_expose_hook(e.win, expose_hook, &e);
 	mlx_key_hook(e.win, key_hook, &e);
 	mlx_mouse_hook(e.win, mouse_hook, &e);
 	mlx_loop(e.mlx);
+	free(map);
 	return (0);
 }
