@@ -77,6 +77,11 @@ int		main(int ac, char **av)
 	int		fd;
 	char	*line;
 	char	*map;
+	char	**split;
+	int		i;
+	int		j;
+	int		**tab;
+	int		k;
 
 	line = NULL;
 	map = ft_strnew(0);
@@ -90,6 +95,14 @@ int		main(int ac, char **av)
 		}
 	}
 	ft_putstr(map);
+	split = ft_strsplit(map, '\n');
+	while (split)
+	{
+		k = ft_strlen(split[i]);
+		k = (int)k;
+		tab = (int**)malloc(sizeof(int*));
+		ft_atoi(&split[i][j]);
+	}
 	e.mlx = mlx_init();
 	e.win = mlx_new_window(e.mlx, 420, 420, "42");
 	mlx_expose_hook(e.win, expose_hook, &e);
