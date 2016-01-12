@@ -6,15 +6,15 @@
 /*   By: afillion <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/11/29 17:47:58 by afillion          #+#    #+#             */
-/*   Updated: 2015/11/29 17:50:22 by afillion         ###   ########.fr       */
+/*   Updated: 2016/01/12 14:31:16 by afillion         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-size_t	ft_strlen(const char *str)
+int	ft_strlen(const char *str)
 {
-	size_t	i;
+	int	i;
 
 	if (str == NULL)
 		return (0);

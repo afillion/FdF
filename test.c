@@ -96,11 +96,10 @@ int		main(int ac, char **av)
 	}
 	ft_putstr(map);
 	split = ft_strsplit(map, '\n');
+	tab = (int**)malloc(sizeof(int*));
 	while (split)
 	{
-		k = ft_strlen(split[i]);
-		k = (int)k;
-		tab = (int**)malloc(sizeof(int*));
+		tab[i] = (int*)malloc(sizeof (int) * ft_strlen(split[i]));
 		ft_atoi(&split[i][j]);
 	}
 	e.mlx = mlx_init();

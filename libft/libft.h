@@ -6,7 +6,7 @@
 /*   By: afillion <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/11/29 14:04:50 by afillion          #+#    #+#             */
-/*   Updated: 2016/01/11 18:17:48 by afillion         ###   ########.fr       */
+/*   Updated: 2016/01/12 14:32:09 by afillion         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void				*ft_memmove(void *dest, const void *src, size_t n);
 void				*ft_memalloc(size_t size);
 void				ft_memdel(void **ap);
 
-size_t				ft_strlen(const char *str);
+int					ft_strlen(const char *str);
 char				*ft_strdup(const char *src);
 char				*ft_strcpy(char *dest, const char *src);
 char				*ft_strncpy(char *dest, const char *src, size_t n);
