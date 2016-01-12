@@ -71,6 +71,29 @@ int		mouse_hook(int button, int x, int y)
 	return (0);
 }
 
+int		count_word(const char *s, char c)
+{
+	int	nb;
+	int	i;
+	int	check;
+
+	i = 0;
+	check = 0;
+	nb = 0;
+	while (s[i] != '\0')
+	{
+		if (s[i] == c && check)
+			check = !check;
+		else if (s[i] != c && !check)
+		{
+			nb++;
+			check = !check;
+		}
+		i++;
+	}
+	return (nb);
+}
+
 int		main(int ac, char **av)
 {
 	t_env	e;
@@ -82,9 +105,14 @@ int		main(int ac, char **av)
 	int		j;
 	int		**tab;
 	int		k;
+	char	**new;
 
 	line = NULL;
 	map = ft_strnew(0);
+	tab = NULL;
+	i = 0;
+	j = 0;
+	k = 0;
 	if (ac == 2)
 	{
 		fd = open(av[1], O_RDONLY);
@@ -92,15 +120,27 @@ int		main(int ac, char **av)
 		{
 			map = ft_strjoin(map, ft_strjoin(line, "\n"));
 			free(line);
+			k++;
 		}
 	}
+	printf("k = %d\n", k);
 	ft_putstr(map);
 	split = ft_strsplit(map, '\n');
-	tab = (int**)malloc(sizeof(int*));
-	while (split)
+	tab = (int**)malloc(sizeof(int*) * k);
+	while (split[i])
 	{
-		tab[i] = (int*)malloc(sizeof (int) * ft_strlen(split[i]));
-		ft_atoi(&split[i][j]);
+		printf("split[%d] = %s\n\n\n",i, split[i]);
+		tab[i] = (int*)malloc(sizeof (int) * count_word(split[i], ' '));
+		printf("count_word(split[%d] = %d\n", i, count_word(split[i], ' '));
+		j = 0;
+		new = ft_strsplit(split[i], ' ');
+		while (new[j])
+		{
+			tab[i][j] = ft_atoi(new[j]);
+			printf("tab[%d][%d] = %d\n", i, j, ft_atoi(new[j]));
+			j++;
+		}
+		i++;
 	}
 	e.mlx = mlx_init();
 	e.win = mlx_new_window(e.mlx, 420, 420, "42");
@@ -108,6 +148,5 @@ int		main(int ac, char **av)
 	mlx_key_hook(e.win, key_hook, &e);
 	mlx_mouse_hook(e.win, mouse_hook, &e);
 	mlx_loop(e.mlx);
-	free(map);
 	return (0);
 }

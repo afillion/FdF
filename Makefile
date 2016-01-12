@@ -4,7 +4,7 @@ LIB = $(LIBPATH)/libft.a
 
 NAME = fdf
 
-CC = gcc
+CC = gcc -g
 
 CFLAGS = -Wall -Werror -Wextra
 
