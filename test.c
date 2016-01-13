@@ -49,7 +49,11 @@ void	ft_draw(t_env e)
 		y = 0;
 		while (j < e.ncol)
 		{
-			mlx_pixel_put(e.mlx, e.win, y, x, 0xFF0000);
+			mlx_pixel_put(e.mlx, e.win, y, (x + e.dot[i][j]), 0xFF0000);
+			if (y + 20 < e.ncol * 20)
+				line(y, x, (y+20), x, e.mlx, e.win);
+			if (x + 20 < e.nline * 20)
+				line(y, x, y, (x + 20), e.mlx, e.win);
 			printf("j = %d\ny = %d\ndot[%d][%d] = %d\n", j, y, i, j, e.dot[i][j]);
 			printf("e.nline = %d\ne.ncol = %d\n", e.nline, e.ncol);
 			j++;
