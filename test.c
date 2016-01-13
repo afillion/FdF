@@ -33,27 +33,36 @@ void line(int x0, int y0, int x1, int y1, void *mlx, void *win)
 	}
 }
 
-void	ft_draw(void *mlx, void *win)
+void	ft_draw(t_env e)
 {
+	int		i;
 	int		x;
+	int		j;
 	int		y;
 
+	i = 0;
 	x = 0;
-	while (x < 360)
+	ft_putendl("ft_draw");
+	while (i < e.nline)
 	{
+		j = 0;
 		y = 0;
-		while (y < 220)
+		while (j < e.ncol)
 		{
-			mlx_pixel_put(mlx, win, x, y, 0xFF0000);
+			mlx_pixel_put(e.mlx, e.win, y, x, 0xFF0000);
+			printf("j = %d\ny = %d\ndot[%d][%d] = %d\n", j, y, i, j, e.dot[i][j]);
+			printf("e.nline = %d\ne.ncol = %d\n", e.nline, e.ncol);
+			j++;
 			y += 20;
 		}
 		x += 20;
+		i++;
 	}
 }
 
 int		expose_hook(t_env *e)
 {
-	ft_draw(e->mlx, e->win);
+	ft_draw(*e);
 	return (0);
 }
 
@@ -103,16 +112,13 @@ int		main(int ac, char **av)
 	char	**split;
 	int		i;
 	int		j;
-	int		**tab;
-	int		k;
 	char	**new;
 
 	line = NULL;
 	map = ft_strnew(0);
-	tab = NULL;
+	e.dot = NULL;
 	i = 0;
 	j = 0;
-	k = 0;
 	if (ac == 2)
 	{
 		fd = open(av[1], O_RDONLY);
@@ -120,24 +126,25 @@ int		main(int ac, char **av)
 		{
 			map = ft_strjoin(map, ft_strjoin(line, "\n"));
 			free(line);
-			k++;
+			e.nline++;
 		}
 	}
-	printf("k = %d\n", k);
+	printf("e.nline = %d\n", e.nline);
 	ft_putstr(map);
 	split = ft_strsplit(map, '\n');
-	tab = (int**)malloc(sizeof(int*) * k);
+	e.dot = (int**)malloc(sizeof(int*) * e.nline);
 	while (split[i])
 	{
 		printf("split[%d] = %s\n\n\n",i, split[i]);
-		tab[i] = (int*)malloc(sizeof (int) * count_word(split[i], ' '));
-		printf("count_word(split[%d] = %d\n", i, count_word(split[i], ' '));
+		e.dot[i] = (int*)malloc(sizeof (int) * count_word(split[i], ' '));
+		e.ncol = count_word(split[i], ' ');
+		printf("count_word(split[%d]) = %d\n", i, count_word(split[i], ' '));
 		j = 0;
 		new = ft_strsplit(split[i], ' ');
 		while (new[j])
 		{
-			tab[i][j] = ft_atoi(new[j]);
-			printf("tab[%d][%d] = %d\n", i, j, ft_atoi(new[j]));
+			e.dot[i][j] = ft_atoi(new[j]);
+			printf("e.dot[%d][%d] = %d\n", i, j, ft_atoi(new[j]));
 			j++;
 		}
 		i++;

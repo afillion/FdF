@@ -9,9 +9,12 @@ typedef struct		s_env
 {
 	void			*mlx;
 	void			*win;
+	int				**dot;
+	int				nline;
+	int				ncol;
 }					t_env;
 
-void				ft_draw(void *mlx, void *win);
+void				ft_draw(t_env e);
 void				line(int x0, int y0, int x1, int y1, void *mlx, void *win);
 
 #endif
