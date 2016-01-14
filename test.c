@@ -54,9 +54,9 @@ void	ft_draw(t_env e)
 		{
 			//mlx_pixel_put(e.mlx, e.win, y, (x + e.dot[i][j]), 0xFF0000);
 			if (y + 20 < e.ncol * 20 + iso)
-				line(y, x, (y+20), (x + e.dot[i][j]), e.mlx, e.win);
-			if (x + 20 < e.nline * 20 + iso)
-				line(y, x, y-20, (x + 20), e.mlx, e.win);
+				line(y, (x-e.dot[i][j]), (y+20), (x - e.dot[i][j+1]), e.mlx, e.win);
+			if ((x + 20 < e.nline * 20 + iso) && i+1<e.nline)
+				line(y, (x-e.dot[i][j]), y-20, (x + 20 - e.dot[i+1][j]), e.mlx, e.win);
 			printf("j = %d\ny = %d\ndot[%d][%d] = %d\n", j, y, i, j, e.dot[i][j]);
 			printf("e.nline = %d\ne.ncol = %d\n", e.nline, e.ncol);
 			j++;
@@ -158,7 +158,7 @@ int		main(int ac, char **av)
 		i++;
 	}
 	e.mlx = mlx_init();
-	e.win = mlx_new_window(e.mlx, 820, 820, "42");
+	e.win = mlx_new_window(e.mlx, 1820, 1820, "42");
 	mlx_expose_hook(e.win, expose_hook, &e);
 	mlx_key_hook(e.win, key_hook, &e);
 	mlx_mouse_hook(e.win, mouse_hook, &e);
