@@ -39,27 +39,31 @@ void	ft_draw(t_env e)
 	int		x;
 	int		j;
 	int		y;
+	int		iso;
 
 	i = 0;
 	x = 0;
+	iso = 20 * e.nline;
+	printf("iso = %d\n", iso);
 	ft_putendl("ft_draw");
 	while (i < e.nline)
 	{
 		j = 0;
-		y = 0;
+		y = iso;
 		while (j < e.ncol)
 		{
-			mlx_pixel_put(e.mlx, e.win, y, (x + e.dot[i][j]), 0xFF0000);
-			if (y + 20 < e.ncol * 20)
-				line(y, x, (y+20), x, e.mlx, e.win);
-			if (x + 20 < e.nline * 20)
-				line(y, x, y, (x + 20), e.mlx, e.win);
+			//mlx_pixel_put(e.mlx, e.win, y, (x + e.dot[i][j]), 0xFF0000);
+			if (y + 20 < e.ncol * 20 + iso)
+				line(y, x, (y+20), (x + e.dot[i][j]), e.mlx, e.win);
+			if (x + 20 < e.nline * 20 + iso)
+				line(y, x, y-20, (x + 20), e.mlx, e.win);
 			printf("j = %d\ny = %d\ndot[%d][%d] = %d\n", j, y, i, j, e.dot[i][j]);
 			printf("e.nline = %d\ne.ncol = %d\n", e.nline, e.ncol);
 			j++;
 			y += 20;
 		}
 		x += 20;
+		iso -= 20;
 		i++;
 	}
 }
@@ -154,7 +158,7 @@ int		main(int ac, char **av)
 		i++;
 	}
 	e.mlx = mlx_init();
-	e.win = mlx_new_window(e.mlx, 420, 420, "42");
+	e.win = mlx_new_window(e.mlx, 820, 820, "42");
 	mlx_expose_hook(e.win, expose_hook, &e);
 	mlx_key_hook(e.win, key_hook, &e);
 	mlx_mouse_hook(e.win, mouse_hook, &e);
