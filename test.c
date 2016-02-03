@@ -43,7 +43,7 @@ void	ft_draw(t_env e)
 
 	i = 0;
 	x = 0;
-	iso = 20 * e.nline;
+	iso = e.zoom * e.nline;
 	printf("iso = %d\n", iso);
 	ft_putendl("ft_draw");
 	while (i < e.nline)
@@ -53,17 +53,17 @@ void	ft_draw(t_env e)
 		while (j < e.ncol)
 		{
 			//mlx_pixel_put(e.mlx, e.win, y, (x + e.dot[i][j]), 0xFF0000);
-			if (y + 20 < e.ncol * 20 + iso)
-				line(y, (x-e.dot[i][j]), (y+20), (x - e.dot[i][j+1]), e.mlx, e.win);
-			if ((x + 20 < e.nline * 20 + iso) && i+1<e.nline)
-				line(y, (x-e.dot[i][j]), y-20, (x + 20 - e.dot[i+1][j]), e.mlx, e.win);
+			if (y + e.zoom < e.ncol * e.zoom + iso)
+				line(y, (x-e.dot[i][j]), (y+e.zoom), (x - e.dot[i][j+1]), e.mlx, e.win);
+			if ((x + e.zoom < e.nline * e.zoom + iso) && i+1<e.nline)
+				line(y, (x-e.dot[i][j]), y-e.zoom, (x + e.zoom - e.dot[i+1][j]), e.mlx, e.win);
 			printf("j = %d\ny = %d\ndot[%d][%d] = %d\n", j, y, i, j, e.dot[i][j]);
 			printf("e.nline = %d\ne.ncol = %d\n", e.nline, e.ncol);
 			j++;
-			y += 20;
+			y += e.zoom;
 		}
-		x += 20;
-		iso -= 20;
+		x += e.zoom;
+		iso -= e.zoom;
 		i++;
 	}
 }
@@ -74,9 +74,21 @@ int		expose_hook(t_env *e)
 	return (0);
 }
 
-int		key_hook(int keycode)
+int		key_hook(int keycode, t_env e)
 {
 	printf("key = %d\n", keycode);
+	if (keycode == 69)
+	{
+		e.zoom += 20;
+		ft_putendl("ZOOM += 20");
+		mlx_expose_hook(e.win, expose_hook, &e);
+	}
+	if (keycode == 78)
+	{
+		e.zoom -= 20;
+		ft_putendl("ZOOM -= 20");
+		mlx_expose_hook(e.win, expose_hook, &e);
+	}
 	if (keycode == 53)
 		exit(0);
 	return (0);
@@ -123,6 +135,7 @@ int		main(int ac, char **av)
 	char	**new;
 
 	line = NULL;
+	e.zoom = 20;
 	map = ft_strnew(0);
 	e.dot = NULL;
 	i = 0;

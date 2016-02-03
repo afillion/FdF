@@ -12,6 +12,7 @@ typedef struct		s_env
 	int				**dot;
 	int				nline;
 	int				ncol;
+	int				zoom;
 }					t_env;
 
 void				ft_draw(t_env e);
