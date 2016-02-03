@@ -41,6 +41,17 @@ void	ft_draw(t_env e)
 	int		y;
 	int		iso;
 
+	x = 0;
+	y = 0;
+	while (x <= 1820)
+	{
+		while (y <= 1820)
+		{
+			mlx_pixel_put(e.mlx, e.win, y, x, 0x000000);
+			y++;
+		}
+		x++;
+	}
 	i = 0;
 	x = 0;
 	iso = e.zoom * e.nline;
@@ -79,13 +90,13 @@ int		key_hook(int keycode, t_env *e)
 	printf("key = %d\n", keycode);
 	if (keycode == 69)
 	{
-		e->zoom += 20;
+		e->zoom += 10;
 		ft_putendl("ZOOM += 20");
 		ft_draw(*e);
 	}
-	if (keycode == 78)
+	if ((keycode == 78) || (keycode == 27))
 	{
-		e->zoom -= 20;
+		e->zoom -= 10;
 		ft_putendl("ZOOM -= 20");
 		ft_draw(*e);
 	}
