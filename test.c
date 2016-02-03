@@ -74,20 +74,20 @@ int		expose_hook(t_env *e)
 	return (0);
 }
 
-int		key_hook(int keycode, t_env e)
+int		key_hook(int keycode, t_env *e)
 {
 	printf("key = %d\n", keycode);
 	if (keycode == 69)
 	{
-		e.zoom += 20;
+		e->zoom += 20;
 		ft_putendl("ZOOM += 20");
-		mlx_expose_hook(e.win, expose_hook, &e);
+		ft_draw(*e);
 	}
 	if (keycode == 78)
 	{
-		e.zoom -= 20;
+		e->zoom -= 20;
 		ft_putendl("ZOOM -= 20");
-		mlx_expose_hook(e.win, expose_hook, &e);
+		ft_draw(*e);
 	}
 	if (keycode == 53)
 		exit(0);
