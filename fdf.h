@@ -16,6 +16,7 @@ typedef struct		s_env
 	int				height;
 	int				shifting;
 	int				updown;
+	int				angle;
 }					t_env;
 
 void				ft_draw(t_env e);

@@ -90,12 +90,12 @@ int		key_hook(int keycode, t_env *e)
 	printf("key = %d\n", keycode);
 	if (keycode == 69)
 	{
-		e->zoom += 10;
+		e->zoom += 5;
 		ft_draw(*e);
 	}
 	if ((keycode == 78) || (keycode == 27))
 	{
-		e->zoom -= 10;
+		e->zoom -= 5;
 		ft_draw(*e);
 	}
 	if (keycode == 126)
@@ -110,22 +110,32 @@ int		key_hook(int keycode, t_env *e)
 	}
 	if (keycode == 0)
 	{
-		e->shifting -= 20;
+		e->shifting -= 30;
 		ft_draw(*e);
 	}
 	if (keycode == 2)
 	{
-		e->shifting += 20;
+		e->shifting += 30;
 		ft_draw(*e);
 	}
 	if (keycode == 13)
 	{
-		e->updown -= 10;
+		e->updown -= 30;
 		ft_draw(*e);
 	}
 	if (keycode == 1)
 	{
-		e->updown += 10;
+		e->updown += 30;
+		ft_draw(*e);
+	}
+	if (keycode == 123)
+	{
+		e->angle += 10;
+		ft_draw(*e);
+	}
+	if (keycode == 124)
+	{
+		e->angle -= 10;
 		ft_draw(*e);
 	}
 	if (keycode == 53)
@@ -178,6 +188,7 @@ int		main(int ac, char **av)
 	e.shifting = 0;
 	e.height = 1;
 	e.updown = 0;
+	e.angle = 0;
 	map = ft_strnew(0);
 	e.dot = NULL;
 	i = 0;
