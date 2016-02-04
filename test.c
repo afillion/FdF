@@ -43,20 +43,20 @@ void	ft_draw(t_env e)
 
 	x = 0;
 	y = 0;
-	while (x <= 1820)
+	while (x <= 820)
 	{
-		while (y <= 1820)
+		while (y <= 820)
 		{
 			mlx_pixel_put(e.mlx, e.win, y, x, 0x000000);
 			y++;
 		}
 		x++;
+		y = 0;
 	}
 	i = 0;
 	x = 0;
 	iso = e.zoom * e.nline;
-	printf("iso = %d\n", iso);
-	ft_putendl("ft_draw");
+	//printf("iso = %d\n", iso);
 	while (i < e.nline)
 	{
 		j = 0;
@@ -65,11 +65,11 @@ void	ft_draw(t_env e)
 		{
 			//mlx_pixel_put(e.mlx, e.win, y, (x + e.dot[i][j]), 0xFF0000);
 			if (y + e.zoom < e.ncol * e.zoom + iso)
-				line(y, (x-e.dot[i][j]), (y+e.zoom), (x - e.dot[i][j+1]), e.mlx, e.win);
+				line(y, (x-e.dot[i][j] * e.height), (y+e.zoom), (x - e.dot[i][j+1] * e.height), e.mlx, e.win);
 			if ((x + e.zoom < e.nline * e.zoom + iso) && i+1<e.nline)
-				line(y, (x-e.dot[i][j]), y-e.zoom, (x + e.zoom - e.dot[i+1][j]), e.mlx, e.win);
-			printf("j = %d\ny = %d\ndot[%d][%d] = %d\n", j, y, i, j, e.dot[i][j]);
-			printf("e.nline = %d\ne.ncol = %d\n", e.nline, e.ncol);
+				line(y, (x-e.dot[i][j] * e.height), y-e.zoom, (x + e.zoom - e.dot[i+1][j] * e.height), e.mlx, e.win);
+			//printf("j = %d\ny = %d\ndot[%d][%d] = %d\n", j, y, i, j, e.dot[i][j]);
+			//printf("e.nline = %d\ne.ncol = %d\n", e.nline, e.ncol);
 			j++;
 			y += e.zoom;
 		}
@@ -91,13 +91,21 @@ int		key_hook(int keycode, t_env *e)
 	if (keycode == 69)
 	{
 		e->zoom += 10;
-		ft_putendl("ZOOM += 20");
 		ft_draw(*e);
 	}
 	if ((keycode == 78) || (keycode == 27))
 	{
 		e->zoom -= 10;
-		ft_putendl("ZOOM -= 20");
+		ft_draw(*e);
+	}
+	if (keycode == 126)
+	{
+		e->height += 10;
+		ft_draw(*e);
+	}
+	if (keycode == 125)
+	{
+		e->height -= 10;
 		ft_draw(*e);
 	}
 	if (keycode == 53)
@@ -105,11 +113,11 @@ int		key_hook(int keycode, t_env *e)
 	return (0);
 }
 
-int		mouse_hook(int button, int x, int y)
-{
-	printf("mouse button = %d(%d,%d)\n", button, x, y);
-	return (0);
-}
+//int		mouse_hook(int button, int x, int y)
+//{
+//	//printf("mouse button = %d(%d,%d)\n", button, x, y);
+//	return (0);
+//}
 
 int		count_word(const char *s, char c)
 {
@@ -147,6 +155,7 @@ int		main(int ac, char **av)
 
 	line = NULL;
 	e.zoom = 20;
+	e.height = 1;
 	map = ft_strnew(0);
 	e.dot = NULL;
 	i = 0;
@@ -161,31 +170,31 @@ int		main(int ac, char **av)
 			e.nline++;
 		}
 	}
-	printf("e.nline = %d\n", e.nline);
+	//printf("e.nline = %d\n", e.nline);
 	ft_putstr(map);
 	split = ft_strsplit(map, '\n');
 	e.dot = (int**)malloc(sizeof(int*) * e.nline);
 	while (split[i])
 	{
-		printf("split[%d] = %s\n\n\n",i, split[i]);
+		//printf("split[%d] = %s\n\n\n",i, split[i]);
 		e.dot[i] = (int*)malloc(sizeof (int) * count_word(split[i], ' '));
 		e.ncol = count_word(split[i], ' ');
-		printf("count_word(split[%d]) = %d\n", i, count_word(split[i], ' '));
+		//printf("count_word(split[%d]) = %d\n", i, count_word(split[i], ' '));
 		j = 0;
 		new = ft_strsplit(split[i], ' ');
 		while (new[j])
 		{
 			e.dot[i][j] = ft_atoi(new[j]);
-			printf("e.dot[%d][%d] = %d\n", i, j, ft_atoi(new[j]));
+			//printf("e.dot[%d][%d] = %d\n", i, j, ft_atoi(new[j]));
 			j++;
 		}
 		i++;
 	}
 	e.mlx = mlx_init();
-	e.win = mlx_new_window(e.mlx, 1820, 1820, "42");
+	e.win = mlx_new_window(e.mlx, 820, 820, "42");
 	mlx_expose_hook(e.win, expose_hook, &e);
 	mlx_key_hook(e.win, key_hook, &e);
-	mlx_mouse_hook(e.win, mouse_hook, &e);
+//	mlx_mouse_hook(e.win, mouse_hook, &e);
 	mlx_loop(e.mlx);
 	return (0);
 }
