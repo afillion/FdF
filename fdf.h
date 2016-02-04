@@ -14,6 +14,7 @@ typedef struct		s_env
 	int				ncol;
 	int				zoom;
 	int				height;
+	int				shifting;
 }					t_env;
 
 void				ft_draw(t_env e);
