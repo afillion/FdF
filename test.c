@@ -54,7 +54,7 @@ void	ft_draw(t_env e)
 		y = 0;
 	}
 	i = 0;
-	x = 0;
+	x = 0 + e.updown;
 	iso = e.zoom * e.nline + e.shifting;
 	//printf("iso = %d\n", iso);
 	while (i < e.nline)
@@ -66,7 +66,7 @@ void	ft_draw(t_env e)
 			//mlx_pixel_put(e.mlx, e.win, y, (x + e.dot[i][j]), 0xFF0000);
 			if (y + e.zoom < e.ncol * e.zoom + iso)
 				line(y, (x-e.dot[i][j] * e.height), (y+e.zoom), (x - e.dot[i][j+1] * e.height), e.mlx, e.win);
-			if ((x + e.zoom + e.shifting < e.nline * e.zoom + iso) && i+1<e.nline)
+			if ((x + e.zoom + e.shifting < e.nline * e.zoom + iso + e.updown) && i+1<e.nline)
 				line(y, (x-e.dot[i][j] * e.height), y-e.zoom, (x + e.zoom - e.dot[i+1][j] * e.height), e.mlx, e.win);
 			//printf("j = %d\ny = %d\ndot[%d][%d] = %d\n", j, y, i, j, e.dot[i][j]);
 			//printf("e.nline = %d\ne.ncol = %d\n", e.nline, e.ncol);
@@ -118,6 +118,16 @@ int		key_hook(int keycode, t_env *e)
 		e->shifting += 20;
 		ft_draw(*e);
 	}
+	if (keycode == 13)
+	{
+		e->updown -= 10;
+		ft_draw(*e);
+	}
+	if (keycode == 1)
+	{
+		e->updown += 10;
+		ft_draw(*e);
+	}
 	if (keycode == 53)
 		exit(0);
 	return (0);
@@ -167,6 +177,7 @@ int		main(int ac, char **av)
 	e.zoom = 20;
 	e.shifting = 0;
 	e.height = 1;
+	e.updown = 0;
 	map = ft_strnew(0);
 	e.dot = NULL;
 	i = 0;
