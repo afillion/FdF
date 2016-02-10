@@ -65,14 +65,14 @@ mlx_clear_window(e.mlx, e.win);
 		y = iso;
 		while (j < e.ncol)
 		{
-			if (ft_abs(e.dot[i][j]) == 0)
-				color = 0x3399FF;
-			if (ft_abs(e.dot[i][j]) > 3)
-				color = 0x00CC00;
-			if (ft_abs(e.dot[i][j]) > 10)
-				color = 0x663300;
 			if (ft_abs(e.dot[i][j]) > 50)
 				color = 0xFFFFFF;
+			else if (ft_abs(e.dot[i][j]) > 10)
+				color = 0x663300;
+			else if (ft_abs(e.dot[i][j]) > 3)
+				color = 0x00CC00;
+			if (ft_abs(e.dot[i][j]) == 0)
+				color = 0x3399FF;
 			//mlx_pixel_put(e.mlx, e.win, y, (x + e.dot[i][j]), 0xFF0000);
 			if (y + e.zoom < e.ncol * e.zoom + iso)
 				line(y, (x-e.dot[i][j] * e.height), (y+e.zoom), (x - e.dot[i][j+1] * e.height), e.mlx, e.win, color);
@@ -140,12 +140,12 @@ int		key_hook(int keycode, t_env *e)
 	}
 	if (keycode == 123)
 	{
-		e->angle += 10;
+		e->angle += 1;
 		ft_draw(*e);
 	}
 	if (keycode == 124)
 	{
-		e->angle -= 10;
+		e->angle -= 1;
 		ft_draw(*e);
 	}
 	if (keycode == 53)
