@@ -11,7 +11,7 @@ void		line(t_pos *p1, t_pos *p2, t_env *e)
 	l.err = (l.dx > l.dy ? l.dx : -l.dy) / 2;
 	while (1)
 	{
-		mlx_pixel_put(e->mlx, e->win, p1->x, p1->y, e->color);
+		mlx_pixel_put(e->mlx, e->win, p1->y, p1->x, e->color);
 		if (p1->x == p2->x && p1->y == p2->y)
 			break ;
 		l.e2 = l.err;
@@ -40,11 +40,29 @@ void		ft_color(int x, t_env *e)
 		e->color = 0xFFFFFF;
 }
 
-t_pos	ft_struct_pos_init(t_pos *p, t_env *e, t_draw *d)
+void	draw_x(t_env *e, t_draw *d)
 {
+	t_pos p1;
+	t_pos p2;
 
+	p1.y = d->y;
+	p1.x = d->x - e->dot[d->i][d->j] * e->height;
+	p2.y = d->y - e->zoom;
+	p2.x = d->x + e->zoom - e->dot[d->i + 1][d->j] * e->height;
+	line(&p1, &p2, e);
 }
 
+void	draw_y(t_env *e, t_draw *d)
+{
+	t_pos p1;
+	t_pos p2;
+
+	p1.y = d->y;
+	p1.x = d->x - e->dot[d->i][d->j] * e->height;
+	p2.y = d->y + e->zoom;
+	p2.x = d->x - e->dot[d->i][d->j + 1] * e->height;
+	line(&p1, &p2, e);
+}
 void	ft_draw(t_env e)
 {
 	t_draw	d;
@@ -60,11 +78,10 @@ void	ft_draw(t_env e)
 		while (d.j < e.ncol)
 		{
 			ft_color(e.dot[d.i][d.j], &e);
-			ft_struct_pos_init(&e, &d);
 			if (d.y + e.zoom < e.ncol * e.zoom + d.iso)
-				line(d.y, (d.x - e.dot[d.i][d.j] * e.height), (d.y + e.zoom), (d.x - e.dot[d.i][d.j + 1] * e.height), &e);
+				draw_y(&e, &d);
 			if ((d.x + e.zoom + e.shifting < e.nline * e.zoom + d.iso + e.updown) && d.i + 1 < e.nline)
-				line(d.y, (d.x - e.dot[d.i][d.j] * e.height), d.y - e.zoom, (d.x + e.zoom - e.dot[d.i + 1][d.j] * e.height), &e);
+				draw_x(&e, &d);
 			d.j++;
 			d.y += e.zoom;
 		}
