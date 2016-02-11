@@ -1,81 +1,76 @@
 #include "fdf.h"
 
-void line(int x0, int y0, int x1, int y1, t_env *e, int color)
+void		line(t_pos *p1, t_pos *p2, t_env *e)
 {
-	int dx;
-	int dy;
-	int sx;
-	int sy;
-	int err;
-	int e2;
+	t_line	l;
 
-	dx = ft_abs(x1-x0);
-	sx = x0<x1 ? 1 : -1;
-	dy = abs(y1-y0);
-	sy = y0<y1 ? 1 : -1;
-	err = (dx>dy ? dx : -dy) / 2;
+	l.dx = ft_abs(p2->x - p1->x);
+	l.sx = p1->x < p2->x ? 1 : -1;
+	l.dy = abs(p2->y - p1->y);
+	l.sy = p1->y < p2->y ? 1 : -1;
+	l.err = (l.dx > l.dy ? l.dx : -l.dy) / 2;
 	while (1)
 	{
-		mlx_pixel_put(e->mlx, e->win, x0, y0, color);
-		if (x0==x1 && y0==y1)
-			break;
-		e2 = err;
-		if (e2 >-dx)
+		mlx_pixel_put(e->mlx, e->win, p1->x, p1->y, e->color);
+		if (p1->x == p2->x && p1->y == p2->y)
+			break ;
+		l.e2 = l.err;
+		if (l.e2 > -l.dx)
 		{
-			err -= dy;
-			x0 += sx;
+			l.err -= l.dy;
+			p1->x += l.sx;
 		}
-		if (e2 < dy)
+		if (l.e2 < l.dy)
 		{
-			err += dx;
-			y0 += sy;
+			l.err += l.dx;
+			p1->y += l.sy;
 		}
 	}
 }
 
-int		ft_color(int x)
+void		ft_color(int x, t_env *e)
 {
-	int		color;
-
 	if (ft_abs(x) >= 0 && ft_abs(x) <= 1)
-		color = 0x3399FF;
+		e->color = 0x3399FF;
 	if (ft_abs(x) > 1)
-		color = 0x00CC00;
+		e->color = 0x00CC00;
 	if (ft_abs(x) > 20)
-		color = 0x663300;
+		e->color = 0x663300;
 	if (ft_abs(x) > 60)
-		color = 0xFFFFFF;
-	return (color);
+		e->color = 0xFFFFFF;
+}
+
+t_pos	ft_struct_pos_init(t_pos *p, t_env *e, t_draw *d)
+{
+
 }
 
 void	ft_draw(t_env e)
 {
-	int		iso;
-	int		i;
-	int		j;
-	int		x;
-	int		y;
+	t_draw	d;
 
 	mlx_clear_window(e.mlx, e.win);
-	i = 0;
-	x = 0 + e.updown;
-	iso = e.zoom * e.nline + e.shifting;
-	while (i < e.nline)
+	d.i = 0;
+	d.x = 0 + e.updown;
+	d.iso = e.zoom * e.nline + e.shifting;
+	while (d.i < e.nline)
 	{
-		j = 0;
-		y = iso;
-		while (j < e.ncol)
+		d.j = 0;
+		d.y = d.iso;
+		while (d.j < e.ncol)
 		{
-			if (y + e.zoom < e.ncol * e.zoom + iso)
-				line(y, (x-e.dot[i][j] * e.height), (y+e.zoom), (x - e.dot[i][j+1] * e.height), &e, ft_color(e.dot[i][j]));
-			if ((x + e.zoom + e.shifting < e.nline * e.zoom + iso + e.updown) && i+1<e.nline)
-				line(y, (x-e.dot[i][j] * e.height), y-e.zoom, (x + e.zoom - e.dot[i+1][j] * e.height), &e, ft_color(e.dot[i][j]));
-			j++;
-			y += e.zoom;
+			ft_color(e.dot[d.i][d.j], &e);
+			ft_struct_pos_init(&e, &d);
+			if (d.y + e.zoom < e.ncol * e.zoom + d.iso)
+				line(d.y, (d.x - e.dot[d.i][d.j] * e.height), (d.y + e.zoom), (d.x - e.dot[d.i][d.j + 1] * e.height), &e);
+			if ((d.x + e.zoom + e.shifting < e.nline * e.zoom + d.iso + e.updown) && d.i + 1 < e.nline)
+				line(d.y, (d.x - e.dot[d.i][d.j] * e.height), d.y - e.zoom, (d.x + e.zoom - e.dot[d.i + 1][d.j] * e.height), &e);
+			d.j++;
+			d.y += e.zoom;
 		}
-		x += e.zoom;
-		iso -= e.zoom;
-		i++;
+		d.x += e.zoom;
+		d.iso -= e.zoom;
+		d.i++;
 	}
 }
 
@@ -138,7 +133,7 @@ int		count_word(const char *s, char c)
 	return (nb);
 }
 
-void	ft_struct_init(t_env *e)
+void	ft_struct_env_init(t_env *e)
 {
 	e->zoom = 2;
 	e->shifting = 0;
@@ -189,7 +184,7 @@ int		main(int ac, char **av)
 	char	*line;
 	char	*map;
 
-	ft_struct_init(&e);
+	ft_struct_env_init(&e);
 	line = NULL;
 	map = ft_strnew(0);
 	if (ac == 2)
