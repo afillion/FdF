@@ -1,6 +1,6 @@
 #include "fdf.h"
 
-void line(int x0, int y0, int x1, int y1, void *mlx, void *win, int color)
+void line(int x0, int y0, int x1, int y1, t_env *e, int color)
 {
 	int dx;
 	int dy;
@@ -16,7 +16,7 @@ void line(int x0, int y0, int x1, int y1, void *mlx, void *win, int color)
 	err = (dx>dy ? dx : -dy) / 2;
 	while (1)
 	{
-		mlx_pixel_put(mlx, win, x0, y0, color);
+		mlx_pixel_put(e->mlx, e->win, x0, y0, color);
 		if (x0==x1 && y0==y1)
 			break;
 		e2 = err;
@@ -37,15 +37,14 @@ int		ft_color(int x)
 {
 	int		color;
 
-	color = 0;
+	if (ft_abs(x) >= 0 && ft_abs(x) <= 1)
+		color = 0x3399FF;
+	if (ft_abs(x) > 1)
+		color = 0x00CC00;
+	if (ft_abs(x) > 20)
+		color = 0x663300;
 	if (ft_abs(x) > 60)
 		color = 0xFFFFFF;
-	else if (ft_abs(x) > 20)
-		color = 0x663300;
-	else if (ft_abs(x) > 3)
-		color = 0x00CC00;
-	else if (ft_abs(x) == 0)
-		color = 0x3399FF;
 	return (color);
 }
 
@@ -68,9 +67,9 @@ void	ft_draw(t_env e)
 		while (j < e.ncol)
 		{
 			if (y + e.zoom < e.ncol * e.zoom + iso)
-				line(y, (x-e.dot[i][j] * e.height), (y+e.zoom), (x - e.dot[i][j+1] * e.height), e.mlx, e.win, ft_color(e.dot[i][j]));
+				line(y, (x-e.dot[i][j] * e.height), (y+e.zoom), (x - e.dot[i][j+1] * e.height), &e, ft_color(e.dot[i][j]));
 			if ((x + e.zoom + e.shifting < e.nline * e.zoom + iso + e.updown) && i+1<e.nline)
-				line(y, (x-e.dot[i][j] * e.height), y-e.zoom, (x + e.zoom - e.dot[i+1][j] * e.height), e.mlx, e.win, ft_color(e.dot[i][j]));
+				line(y, (x-e.dot[i][j] * e.height), y-e.zoom, (x + e.zoom - e.dot[i+1][j] * e.height), &e, ft_color(e.dot[i][j]));
 			j++;
 			y += e.zoom;
 		}
@@ -89,47 +88,24 @@ int		expose_hook(t_env *e)
 int		key_hook(int keycode, t_env *e)
 {
 	if (keycode == 69)
-	{
 		e->zoom += 1;
-		ft_draw(*e);
-	}
 	if ((keycode == 78) || (keycode == 27))
-	{
 		e->zoom -= 1;
-		ft_draw(*e);
-	}
 	if (keycode == 126)
-	{
 		e->height += 1;
-		ft_draw(*e);
-	}
 	if (keycode == 125)
-	{
 		e->height -= 1;
-		ft_draw(*e);
-	}
 	if (keycode == 0)
-	{
 		e->shifting -= 90;
-		ft_draw(*e);
-	}
 	if (keycode == 2)
-	{
 		e->shifting += 90;
-		ft_draw(*e);
-	}
 	if (keycode == 13)
-	{
 		e->updown -= 90;
-		ft_draw(*e);
-	}
 	if (keycode == 1)
-	{
 		e->updown += 90;
-		ft_draw(*e);
-	}
 	if (keycode == 53)
 		exit(0);
+	ft_draw(*e);
 	return (0);
 }
 
