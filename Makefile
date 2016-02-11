@@ -11,7 +11,10 @@ CFLAGS = -Wall -Werror -Wextra
 LDFLAGS = -L libft -lft -L/usr/local/lib -I/usr/local/include -lmlx -framework OpenGL -framework AppKit
 
 SRC = get_next_line/get_next_line.c \
-	  test.c
+	  main.c \
+	  draw.c \
+	  parse.c \
+	  overlay.c
 
 OBJ = $(SRC:.c=.o)
 
