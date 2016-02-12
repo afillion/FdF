@@ -6,11 +6,11 @@
 /*   By: afillion <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/12/31 17:17:48 by afillion          #+#    #+#             */
-/*   Updated: 2015/12/31 17:17:50 by afillion         ###   ########.fr       */
+/*   Updated: 2016/02/12 13:25:48 by afillion         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "includes/get_next_line.h"
 
 char				*ft_join(char const *s1, char const *s2)
 {

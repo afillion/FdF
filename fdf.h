@@ -6,14 +6,14 @@
 /*   By: afillion <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/11 20:39:57 by afillion          #+#    #+#             */
-/*   Updated: 2016/02/11 23:24:53 by afillion         ###   ########.fr       */
+/*   Updated: 2016/02/12 15:22:31 by afillion         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FDF_H
 # define FDF_H
 # include <mlx.h>
-# include "get_next_line/get_next_line.h"
+# include "libft/includes/get_next_line.h"
 # include <fcntl.h>
 # include <stdio.h>
 # define SIZE 1820
@@ -32,6 +32,7 @@ typedef struct		s_env
 	int				updown;
 	int				color;
 	int				angle;
+	int				z;
 }					t_env;
 
 typedef struct		s_pos
@@ -63,7 +64,7 @@ int					count_word(const char *s, char c);
 void				struct_init(t_env *e);
 void				parse(char *map, t_env *e);
 void				ft_mlx(t_env *e);
-void				color(int x, t_env *e);
+void				color(t_env *e);
 void				draw(t_env e);
 void				draw_x(t_env *e, t_draw *d);
 void				draw_y(t_env *e, t_draw *d);

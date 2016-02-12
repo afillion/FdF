@@ -1,14 +1,18 @@
 #include "fdf.h"
 
-void		color(int x, t_env *e)
+void		color(t_env *e)
 {
-	if (ft_abs(x) >= 0 && ft_abs(x) <= 1)
-		e->color = 0x3399FF;
-	if (ft_abs(x) > 1)
+	if (ft_abs(e->z) >= 0 && ft_abs(e->z) <= 1)
+		e->color = 0x0000FF;
+	if (ft_abs(e->z) > 1)
 		e->color = 0x00CC00;
-	if (ft_abs(x) > 20)
+	if (ft_abs(e->z) > 5)
+		e->color = 0x339900;
+	if (ft_abs(e->z) > 15)
+		e->color = 0x996600;
+	if (ft_abs(e->z) > 20)
 		e->color = 0x663300;
-	if (ft_abs(x) > 60)
+	if (ft_abs(e->z) > 60)
 		e->color = 0xFFFFFF;
 }
 
@@ -29,16 +33,16 @@ int			key_hook(int keycode, t_env *e)
 	if (keycode == 125)
 		e->height -= 1;
 	if (keycode == 0)
-		e->shifting -= 90;
+		e->shifting -= 200;
 	if (keycode == 2)
-		e->shifting += 90;
+		e->shifting += 200;
 	if (keycode == 13)
-		e->updown -= 90;
+		e->updown -= 200;
 	if (keycode == 1)
-		e->updown += 90;
-	if (keycode == 123)
-		e->angle += 2;
+		e->updown += 200;
 	if (keycode == 124)
+		e->angle += 2;
+	if (keycode == 123)
 		e->angle -= 2;
 	if (keycode == 53)
 		exit(0);

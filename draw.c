@@ -33,6 +33,8 @@ void		draw_x(t_env *e, t_draw *d)
 	t_pos p1;
 	t_pos p2;
 
+	e->z = (e->dot[d->i][d->j] + e->dot[d->i + 1][d->j]) / 2;
+	color(e);
 	p1.y = (d->j * e->zoom) + ((e->nline - d->i) * e->angle) + e->shifting;
 	p1.x = (d->i * e->zoom) - (e->dot[d->i][d->j] * e->height) + e->updown;
 	p2.y = (d->j * e->zoom) + ((e->nline - (d->i + 1)) * e->angle) + e->shifting;
@@ -45,6 +47,8 @@ void		draw_y(t_env *e, t_draw *d)
 	t_pos p1;
 	t_pos p2;
 
+	e->z = (e->dot[d->i][d->j] + e->dot[d->i][d->j + 1]) / 2;
+	color(e);
 	p1.y = (d->j * e->zoom) + ((e->nline - d->i) * e->angle) + e->shifting;
 	p1.x = (d->i * e->zoom) - (e->dot[d->i][d->j] * e->height) + e->updown;
 	p2.y = ((d->j + 1) * e->zoom) + ((e->nline - d->i) * e->angle) + e->shifting;
@@ -59,13 +63,12 @@ void		draw(t_env e)
 	mlx_clear_window(e.mlx, e.win);
 	put_overlay(&e);
 	d.i = 0;
-	d.x = 0 + e.updown;
 	while (d.i < e.nline)
 	{
 		d.j = 0;
+		color(&e);
 		while (d.j < e.ncol)
 		{
-			color(e.dot[d.i][d.j], &e);
 			if (d.j + 1 < e.ncol)
 				draw_y(&e, &d);
 			if (d.i + 1 < e.nline)

@@ -6,11 +6,11 @@
 /*   By: afillion <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/11/29 17:42:58 by afillion          #+#    #+#             */
-/*   Updated: 2015/11/30 17:38:06 by afillion         ###   ########.fr       */
+/*   Updated: 2016/02/12 13:27:56 by afillion         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "includes/libft.h"
 
 size_t	ft_strlcat(char *dest, const char *src, size_t size)
 {

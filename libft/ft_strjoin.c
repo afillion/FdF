@@ -6,11 +6,11 @@
 /*   By: afillion <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/11/29 17:39:31 by afillion          #+#    #+#             */
-/*   Updated: 2015/12/03 14:15:51 by afillion         ###   ########.fr       */
+/*   Updated: 2016/02/12 15:31:11 by afillion         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "includes/libft.h"
 #include <stdlib.h>
 
 char	*ft_strjoin(char const *s1, char const *s2)

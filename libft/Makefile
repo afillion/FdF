@@ -6,7 +6,7 @@
 #    By: afillion <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2015/11/30 15:37:28 by afillion          #+#    #+#              #
-#    Updated: 2016/01/11 18:17:21 by afillion         ###   ########.fr        #
+#    Updated: 2016/02/12 13:04:08 by afillion         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -77,7 +77,8 @@ SRC =  ft_strlcat.c \
 	ft_strcat.c \
 	ft_strnew.c \
 	ft_strcpy.c \
-	ft_abs.c
+	ft_abs.c \
+	get_next_line.c
 
 OBJ = $(SRC:.c=.o)
 

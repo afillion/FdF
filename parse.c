@@ -30,6 +30,7 @@ void		struct_init(t_env *e)
 	e->height = 1;
 	e->updown = (SIZE - (e->ncol * e->zoom)) / 4;
 	e->angle = 2;
+	e->z = 0;
 }
 
 void		parse(char *map, t_env *e)
@@ -39,6 +40,7 @@ void		parse(char *map, t_env *e)
 	char	**new;
 	char	**split;
 
+	e->ncol = 0;
 	i = 0;
 	split = ft_strsplit(map, '\n');
 	e->dot = (int**)malloc(sizeof(int*) * e->nline);
@@ -46,7 +48,8 @@ void		parse(char *map, t_env *e)
 	{
 		j = 0;
 		e->dot[i] = (int*)malloc(sizeof(int) * count_word(split[i], ' '));
-		e->ncol = count_word(split[i], ' ');
+		if (e->ncol < count_word(split[i], ' '))
+			e->ncol = count_word(split[i], ' ');
 		new = ft_strsplit(split[i], ' ');
 		while (new[j])
 		{
