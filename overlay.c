@@ -6,7 +6,7 @@
 /*   By: afillion <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/12 17:20:50 by afillion          #+#    #+#             */
-/*   Updated: 2016/02/12 17:37:41 by afillion         ###   ########.fr       */
+/*   Updated: 2016/02/12 17:55:54 by afillion         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,10 @@
 
 void	color(t_env *e)
 {
-	if (ft_abs(e->z) >= 0 && ft_abs(e->z) <= 1)
+	if (ft_abs(e->z) == 0)
 		e->color = 0x0000FF;
+	if (ft_abs(e->z) == 1)
+		e->color = 0x00CCFF;
 	if (ft_abs(e->z) > 1)
 		e->color = 0x00CC00;
 	if (ft_abs(e->z) > 5)
