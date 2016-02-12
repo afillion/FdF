@@ -1,4 +1,32 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   overlay.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: afillion <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2016/02/12 17:20:50 by afillion          #+#    #+#             */
+/*   Updated: 2016/02/12 17:37:41 by afillion         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "fdf.h"
+
+void	color(t_env *e)
+{
+	if (ft_abs(e->z) >= 0 && ft_abs(e->z) <= 1)
+		e->color = 0x0000FF;
+	if (ft_abs(e->z) > 1)
+		e->color = 0x00CC00;
+	if (ft_abs(e->z) > 5)
+		e->color = 0x339900;
+	if (ft_abs(e->z) > 15)
+		e->color = 0x996600;
+	if (ft_abs(e->z) > 20)
+		e->color = 0x663300;
+	if (ft_abs(e->z) > 60)
+		e->color = 0xFFFFFF;
+}
 
 void	put_overlay(t_env *e)
 {

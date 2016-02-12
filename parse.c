@@ -1,4 +1,22 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parse.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: afillion <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2016/02/12 17:21:07 by afillion          #+#    #+#             */
+/*   Updated: 2016/02/12 17:22:00 by afillion         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "fdf.h"
+
+void		ft_exit(char *s)
+{
+	ft_putendl_fd(s, 2);
+	exit(0);
+}
 
 int			count_word(const char *s, char c)
 {
@@ -25,7 +43,7 @@ int			count_word(const char *s, char c)
 
 void		struct_init(t_env *e)
 {
-	e->zoom = e->ncol > e->nline ? SIZE / 2 / e->ncol : SIZE/ 2 / e->nline;
+	e->zoom = e->ncol > e->nline ? SIZE / 2 / e->ncol : SIZE / 2 / e->nline;
 	e->shifting = (SIZE - (e->nline * e->zoom)) / 4;
 	e->height = 1;
 	e->updown = (SIZE - (e->ncol * e->zoom)) / 4;

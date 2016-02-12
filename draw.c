@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   draw.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: afillion <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2016/02/12 17:24:51 by afillion          #+#    #+#             */
+/*   Updated: 2016/02/12 17:26:41 by afillion         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "fdf.h"
 
 void		trace(t_pos *p1, t_pos *p2, t_env *e)
@@ -37,8 +49,10 @@ void		draw_x(t_env *e, t_draw *d)
 	color(e);
 	p1.y = (d->j * e->zoom) + ((e->nline - d->i) * e->angle) + e->shifting;
 	p1.x = (d->i * e->zoom) - (e->dot[d->i][d->j] * e->height) + e->updown;
-	p2.y = (d->j * e->zoom) + ((e->nline - (d->i + 1)) * e->angle) + e->shifting;
-	p2.x = ((d->i + 1) * e->zoom) - (e->dot[d->i + 1][d->j] * e->height) + e->updown;
+	p2.y = (d->j * e->zoom) + ((e->nline - (d->i + 1)) * e->angle) +
+		e->shifting;
+	p2.x = ((d->i + 1) * e->zoom) - (e->dot[d->i + 1][d->j] * e->height) +
+		e->updown;
 	trace(&p1, &p2, e);
 }
 
@@ -51,7 +65,8 @@ void		draw_y(t_env *e, t_draw *d)
 	color(e);
 	p1.y = (d->j * e->zoom) + ((e->nline - d->i) * e->angle) + e->shifting;
 	p1.x = (d->i * e->zoom) - (e->dot[d->i][d->j] * e->height) + e->updown;
-	p2.y = ((d->j + 1) * e->zoom) + ((e->nline - d->i) * e->angle) + e->shifting;
+	p2.y = ((d->j + 1) * e->zoom) + ((e->nline - d->i) * e->angle) +
+		e->shifting;
 	p2.x = (d->i * e->zoom) - (e->dot[d->i][d->j + 1] * e->height) + e->updown;
 	trace(&p1, &p2, e);
 }

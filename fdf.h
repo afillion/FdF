@@ -6,7 +6,7 @@
 /*   By: afillion <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/11 20:39:57 by afillion          #+#    #+#             */
-/*   Updated: 2016/02/12 15:22:31 by afillion         ###   ########.fr       */
+/*   Updated: 2016/02/12 17:14:34 by afillion         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,7 @@ typedef struct		s_draw
 }					t_draw;
 
 int					count_word(const char *s, char c);
+void				ft_exit(char *s);
 void				struct_init(t_env *e);
 void				parse(char *map, t_env *e);
 void				ft_mlx(t_env *e);

@@ -1,20 +1,16 @@
-#include "fdf.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: afillion <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2016/02/12 17:22:11 by afillion          #+#    #+#             */
+/*   Updated: 2016/02/12 17:37:15 by afillion         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-void		color(t_env *e)
-{
-	if (ft_abs(e->z) >= 0 && ft_abs(e->z) <= 1)
-		e->color = 0x0000FF;
-	if (ft_abs(e->z) > 1)
-		e->color = 0x00CC00;
-	if (ft_abs(e->z) > 5)
-		e->color = 0x339900;
-	if (ft_abs(e->z) > 15)
-		e->color = 0x996600;
-	if (ft_abs(e->z) > 20)
-		e->color = 0x663300;
-	if (ft_abs(e->z) > 60)
-		e->color = 0xFFFFFF;
-}
+#include "fdf.h"
 
 int			expose_hook(t_env *e)
 {
@@ -59,6 +55,13 @@ void		ft_mlx(t_env *e)
 	mlx_loop(e->mlx);
 }
 
+void		ft_open_win(t_env *e, char *map)
+{
+	struct_init(e);
+	parse(map, e);
+	ft_mlx(e);
+}
+
 int			main(int ac, char **av)
 {
 	t_env	e;
@@ -72,15 +75,18 @@ int			main(int ac, char **av)
 	{
 		e.filename = av[1];
 		fd = open(av[1], O_RDONLY);
+		if (fd < 1)
+			ft_exit("Bad file descriptor");
 		while (get_next_line(fd, &line) > 0)
 		{
 			map = ft_strjoin(map, ft_strjoin(line, "\n"));
 			free(line);
 			e.nline++;
 		}
+		close(fd);
 	}
-	parse(map, &e);
-	struct_init(&e);
-	ft_mlx(&e);
+	else
+		ft_exit("Usage: ./fdf <path to map>");
+	ft_open_win(&e, map);
 	return (0);
 }
