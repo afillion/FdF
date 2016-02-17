@@ -6,7 +6,7 @@
 /*   By: afillion <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/12 17:24:51 by afillion          #+#    #+#             */
-/*   Updated: 2016/02/12 17:26:41 by afillion         ###   ########.fr       */
+/*   Updated: 2016/02/17 11:00:29 by afillion         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void		trace(t_pos *p1, t_pos *p2, t_env *e)
 
 	l.dx = ft_abs(p2->x - p1->x);
 	l.sx = p1->x < p2->x ? 1 : -1;
-	l.dy = abs(p2->y - p1->y);
+	l.dy = ft_abs(p2->y - p1->y);
 	l.sy = p1->y < p2->y ? 1 : -1;
 	l.err = (l.dx > l.dy ? l.dx : -l.dy) / 2;
 	while (1)
